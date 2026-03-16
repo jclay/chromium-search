@@ -4,6 +4,8 @@ An agent friendly CLI for [Chromium source code](https://source.chromium.org).
 
 A single-file Python script with zero dependencies. Talks directly to the Chromium Code Search API.
 
+![screenshot of chromium-search](screenshot.svg)
+
 ## Install
 
 The script is a single standalone script. Fetch it and customize it to fit your needs.
