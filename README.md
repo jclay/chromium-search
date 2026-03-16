@@ -60,7 +60,7 @@ chromium-search cat chrome/browser/BUILD.gn --ref refs/tags/144.0.7559.98
 
 ## How it works
 
-Queries the [Grimoire API](https://grimoireoss-pa.clients6.google.com) that powers source.chromium.org. Search and find use the batch REST transport; cat uses gRPC-Web to the FileService. No authentication required.
+Queries the Grimoire API that powers source.chromium.org. Search and find use the batch REST transport; cat uses gRPC-Web to the FileService. No authentication required.
 
 ## License
 
