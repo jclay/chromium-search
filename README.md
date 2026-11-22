@@ -10,16 +10,34 @@ A single-file Python script with zero dependencies. Talks directly to the Chromi
 
 Requires Python 3.11+ (standard library only, no other packages).
 
-### macOS / Linux
+### From git (any OS, needs `git`)
+
+Installs a real `chromium-search` command. Nothing is published to PyPI; it installs straight from this repo.
 
 ```
-curl -o chromium-search https://raw.githubusercontent.com/jclay/chromium-search/main/chromium-search.py
+pip install git+https://github.com/jclay/chromium-search
+```
+
+Or, to keep it isolated from your other Python packages, use whichever tool you have:
+
+```
+pipx install git+https://github.com/jclay/chromium-search
+uv tool install git+https://github.com/jclay/chromium-search
+uvx --from git+https://github.com/jclay/chromium-search chromium-search <query>   # run without installing
+```
+
+Update with `pip install -U git+https://github.com/jclay/chromium-search` (or `pipx upgrade chromium-search` / `uv tool upgrade chromium-search`).
+
+### macOS / Linux (single file)
+
+```
+curl -o chromium-search https://raw.githubusercontent.com/jclay/chromium-search/main/chromium_search.py
 chmod +x chromium-search
 ```
 
 Put it somewhere on your `PATH`.
 
-### Windows
+### Windows without git or pip
 
 Copy and paste into PowerShell. It installs to `%LOCALAPPDATA%\Programs\chromium-search`, adds that folder to your user `PATH`, and creates a `chromium-search.cmd` launcher so it works from PowerShell and cmd. Requires Python 3.11+ from [python.org](https://www.python.org/downloads/windows/) or the Microsoft Store (`py` or `python` on `PATH`).
 
@@ -27,7 +45,7 @@ Copy and paste into PowerShell. It installs to `%LOCALAPPDATA%\Programs\chromium
 $dir = "$env:LOCALAPPDATA\Programs\chromium-search"
 $raw = "https://raw.githubusercontent.com/jclay/chromium-search/main"
 New-Item -ItemType Directory -Force $dir | Out-Null
-foreach ($f in "chromium-search.py", "chromium-search.cmd") {
+foreach ($f in "chromium_search.py", "chromium-search.cmd") {
     Invoke-WebRequest -UseBasicParsing "$raw/$f" -OutFile "$dir\$f"
 }
 $userPath = [Environment]::GetEnvironmentVariable("Path", "User")

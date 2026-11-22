@@ -1,3 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chromium-search"
+version = "0.1.0"
+description = "An agent friendly CLI for Chromium source code"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+chromium-search = "chromium_search:cli"
+
+[tool.setuptools]
+py-modules = ["chromium_search"]
+
 [tool.ruff]
 target-version = "py311"
 line-length = 88

@@ -984,10 +984,16 @@ def main() -> None:
     )
 
 
-if __name__ == "__main__":
+def cli() -> None:
     setup_console()
     try:
         main()
+    except BrokenPipeError:
+        sys.exit(1)
     except Exception as exc:
         sys.stderr.write(f"Error: {exc}\n")
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    cli()
