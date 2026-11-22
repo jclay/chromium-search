@@ -8,14 +8,37 @@ A single-file Python script with zero dependencies. Talks directly to the Chromi
 
 ## Install
 
-The script is a single standalone script. Fetch it and customize it to fit your needs.
+Requires Python 3.11+ (standard library only, no other packages).
+
+### macOS / Linux
 
 ```
 curl -o chromium-search https://raw.githubusercontent.com/jclay/chromium-search/main/chromium-search.py
 chmod +x chromium-search
 ```
 
-Put it somewhere on your `PATH`. Requires Python 3.11+ or [`uv`](https://docs.astral.sh/uv/).
+Put it somewhere on your `PATH`.
+
+### Windows
+
+Copy and paste into PowerShell. It installs to `%LOCALAPPDATA%\Programs\chromium-search`, adds that folder to your user `PATH`, and creates a `chromium-search.cmd` launcher so it works from PowerShell and cmd. Requires Python 3.11+ from [python.org](https://www.python.org/downloads/windows/) or the Microsoft Store (`py` or `python` on `PATH`).
+
+```powershell
+$dir = "$env:LOCALAPPDATA\Programs\chromium-search"
+$raw = "https://raw.githubusercontent.com/jclay/chromium-search/main"
+New-Item -ItemType Directory -Force $dir | Out-Null
+foreach ($f in "chromium-search.py", "chromium-search.cmd") {
+    Invoke-WebRequest -UseBasicParsing "$raw/$f" -OutFile "$dir\$f"
+}
+$userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if (($userPath -split ";") -notcontains $dir) {
+    [Environment]::SetEnvironmentVariable("Path", (($userPath, $dir) -join ";").Trim(";"), "User")
+}
+$env:Path += ";$dir"
+chromium-search find web_contents.h
+```
+
+Open a new terminal for other windows to pick up the `PATH` change. To update, re-run the same snippet. To uninstall, delete the folder and remove it from your user `PATH`.
 
 ## Usage
 

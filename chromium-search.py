@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-# /// script
-# requires-python = ">=3.11"
-# dependencies = []
-# ///
-"""CLI for Chromium Code Search."""
-
-from __future__ import annotations
+"""CLI for Chromium Code Search (Python 3.11+, standard library only)."""
 
 import argparse
 import json
@@ -19,7 +13,7 @@ import urllib.parse
 import urllib.request
 from collections.abc import Generator
 from dataclasses import dataclass, field
-from typing import Any, TextIO
+from typing import Any, Self, TextIO
 
 # ---------------------------------------------------------------------------
 # Types
@@ -403,6 +397,18 @@ def set_no_color(value: bool) -> None:
     _force_no_color = value
 
 
+def setup_console() -> None:
+    """Make output behave on Windows: UTF-8 streams and ANSI escape support."""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+        except (AttributeError, ValueError):
+            pass
+    if sys.platform == "win32":
+        # Calling system("") makes the Windows console enable VT processing.
+        os.system("")
+
+
 def colors_enabled() -> bool:
     return _is_tty() and "NO_COLOR" not in os.environ and not _force_no_color
 
@@ -442,7 +448,7 @@ class Spinner:
         self._active = False
         self._thread: threading.Thread | None = None
 
-    def start(self) -> Spinner:
+    def start(self) -> Self:
         if not (hasattr(self._stream, "isatty") and self._stream.isatty()):
             return self
         self._active = True
@@ -979,6 +985,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    setup_console()
     try:
         main()
     except Exception as exc:

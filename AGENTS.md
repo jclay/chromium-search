@@ -1,6 +1,6 @@
-- Single-file Python 3.11+ tool (`chromium-search.py`), run with `uv run chromium-search.py`
+- Single-file Python 3.11+ tool (`chromium-search.py`), run with `python chromium-search.py` (must work on Windows, macOS, Linux)
 - Zero dependencies — stdlib only
-- Keep it simple: no build system, no packaging
+- Keep it simple: no build system, no packaging; Windows install is `chromium-search.cmd` + PowerShell snippet in README
 
 ## Dev commands
 
